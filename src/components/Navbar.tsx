@@ -2,18 +2,13 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { Menu, X, Zap } from "lucide-react";
-
-const links = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/services", label: "Services" },
-  { href: "/contact", label: "Contact" },
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [onDark, setOnDark] = useState(true);
+  const { lang, setLang, t } = useLanguage();
 
   useEffect(() => {
     const h = () => {
@@ -25,6 +20,13 @@ export default function Navbar() {
   }, []);
 
   const isDark = onDark && !scrolled;
+
+  const links = [
+    { href: "/", label: t("nav.home") },
+    { href: "/about", label: t("nav.about") },
+    { href: "/services", label: t("nav.services") },
+    { href: "/contact", label: t("nav.contact") },
+  ];
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "nav-blur shadow-sm py-3" : "bg-transparent py-5"}`}>
@@ -39,7 +41,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* Desktop */}
+        {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-8">
           {links.map((l) => (
             <Link key={l.href} href={l.href}
@@ -50,10 +52,17 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <Link href="/contact"
-          className="hidden md:inline-flex items-center gap-2 btn-primary px-5 py-2.5 text-sm cursor-pointer">
-          Free Consultation
-        </Link>
+        <div className="hidden md:flex items-center gap-3">
+          <button
+            onClick={() => setLang(lang === "en" ? "fr" : "en")}
+            className="text-sm font-semibold px-3 py-1.5 rounded-full border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors cursor-pointer">
+            {lang === "en" ? "FR" : "EN"}
+          </button>
+          <Link href="/contact"
+            className="inline-flex items-center gap-2 btn-primary px-5 py-2.5 text-sm cursor-pointer">
+            {t("nav.bookCall")}
+          </Link>
+        </div>
 
         <button className={`md:hidden cursor-pointer ${isDark ? "text-white" : "text-slate-700"}`} onClick={() => setOpen(!open)}>
           {open ? <X size={24} /> : <Menu size={24} />}
@@ -66,10 +75,17 @@ export default function Navbar() {
             <Link key={l.href} href={l.href} onClick={() => setOpen(false)}
               className="text-slate-700 hover:text-blue-600 font-medium transition-colors">{l.label}</Link>
           ))}
-          <Link href="/contact" onClick={() => setOpen(false)}
-            className="btn-primary px-4 py-2.5 text-sm text-center cursor-pointer">
-            Free Consultation
-          </Link>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setLang(lang === "en" ? "fr" : "en")}
+              className="text-sm font-semibold px-3 py-1.5 rounded-full border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-colors cursor-pointer">
+              {lang === "en" ? "FR" : "EN"}
+            </button>
+            <Link href="/contact" onClick={() => setOpen(false)}
+              className="btn-primary px-4 py-2.5 text-sm text-center cursor-pointer flex-1">
+              {t("nav.bookCall")}
+            </Link>
+          </div>
         </div>
       )}
     </header>

@@ -6,42 +6,39 @@ import Link from "next/link";
 import MeteorField from "@/components/MeteorField";
 import AuroraBackground   from "@/components/AuroraBackground";
 import DotMeshBackground  from "@/components/DotMeshBackground";
-
-const services = [
-  { icon: Brain,      color: "bg-blue-50 text-blue-600",    tag: "bg-blue-50 text-blue-700 border-blue-200",
-    title: "AI & Data Strategy", price: "From $8,000 CAD",
-    desc: "From GenAI roadmaps to predictive model deployment — I help organisations design, prioritise, and execute AI initiatives that tie directly to revenue and cost outcomes.",
-    features: ["GenAI & LLM architecture","RAG pipeline design","AI program management","Model training & evaluation","Data governance & ETL"] },
-  { icon: Cpu,        color: "bg-sky-50 text-sky-600",      tag: "bg-sky-50 text-sky-700 border-sky-200",
-    title: "Cloud Architecture", price: "From $6,000 CAD",
-    desc: "Azure and AWS cloud-native design, microservices, Kubernetes, and distributed systems engineered for mission-critical reliability and scale.",
-    features: ["Azure & AWS architecture","Microservices & K8s","Cloud cost optimisation","Migration strategy","Distributed systems design"] },
-  { icon: TrendingUp, color: "bg-green-50 text-green-600",  tag: "bg-green-50 text-green-700 border-green-200",
-    title: "IT Program Management", price: "From $5,000 CAD",
-    desc: "End-to-end program delivery from $1M to $25M+ budgets using SAFe 6 Agile — with rigorous governance, executive stakeholder management, and on-time delivery.",
-    features: ["SAFe 6 / Agile delivery","Executive stakeholder mgmt","Budget & risk governance","Roadmap prioritisation","OKR & KPI frameworks"] },
-  { icon: Zap,        color: "bg-amber-50 text-amber-600",  tag: "bg-amber-50 text-amber-700 border-amber-200",
-    title: "Digital Transformation", price: "From $7,000 CAD",
-    desc: "Legacy-to-modern migrations, API integrations (MuleSoft EIP), and enterprise platform modernisation with measurable productivity and revenue outcomes.",
-    features: ["MuleSoft EIP integration","Legacy system migration","API strategy","Process re-engineering","Change management"] },
-  { icon: BarChart3,  color: "bg-purple-50 text-purple-600", tag: "bg-purple-50 text-purple-700 border-purple-200",
-    title: "Data & Analytics Platforms", price: "From $4,500 CAD",
-    desc: "Databricks, Power BI, and Tableau implementations turning raw operational data into executive dashboards, automated reporting, and BI-driven decisions.",
-    features: ["Databricks implementation","Power BI / Tableau","ETL pipeline design","KPI dashboards","Data catalogue & governance"] },
-  { icon: Shield,     color: "bg-red-50 text-red-600",      tag: "bg-red-50 text-red-700 border-red-200",
-    title: "Trust, Safety & IT Governance", price: "From $4,000 CAD",
-    desc: "Cybersecurity, ITIL V4 governance frameworks, mission-critical system reliability, and quality-assurance standards for regulated industries.",
-    features: ["ITIL V4 governance","Cybersecurity frameworks","System reliability audits","IoT & telematics analytics","Compliance & risk registers"] },
-];
-
-const steps = [
-  { n: "01", title: "Discovery",    desc: "30-minute free call to understand your challenges, current state, and desired outcomes." },
-  { n: "02", title: "Assessment",   desc: "I audit your environment and produce a clear written assessment with prioritised recommendations." },
-  { n: "03", title: "Delivery",     desc: "Hands-on execution — I work directly with your team using SAFe Agile sprints and weekly reviews." },
-  { n: "04", title: "Handover",     desc: "Full knowledge transfer, documentation, and optional ongoing retainer for continued support." },
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function ServicesPage() {
+  const { t } = useLanguage();
+
+  const services = [
+    { icon: Brain,      color: "bg-blue-50 text-blue-600",    tag: "bg-blue-50 text-blue-700 border-blue-200",
+      title: t("svc.ai.title"),   price: t("svcs.ai.price"),   desc: t("svcs.ai.desc"),
+      features: [t("svcs.ai.f0"), t("svcs.ai.f1"), t("svcs.ai.f2"), t("svcs.ai.f3"), t("svcs.ai.f4")] },
+    { icon: Cpu,        color: "bg-sky-50 text-sky-600",      tag: "bg-sky-50 text-sky-700 border-sky-200",
+      title: t("svc.cloud.title"), price: t("svcs.cloud.price"), desc: t("svcs.cloud.desc"),
+      features: [t("svcs.cloud.f0"), t("svcs.cloud.f1"), t("svcs.cloud.f2"), t("svcs.cloud.f3"), t("svcs.cloud.f4")] },
+    { icon: TrendingUp, color: "bg-green-50 text-green-600",  tag: "bg-green-50 text-green-700 border-green-200",
+      title: t("svc.itpm.title"), price: t("svcs.itpm.price"), desc: t("svcs.itpm.desc"),
+      features: [t("svcs.itpm.f0"), t("svcs.itpm.f1"), t("svcs.itpm.f2"), t("svcs.itpm.f3"), t("svcs.itpm.f4")] },
+    { icon: Zap,        color: "bg-amber-50 text-amber-600",  tag: "bg-amber-50 text-amber-700 border-amber-200",
+      title: t("svc.dt.title"),   price: t("svcs.dt.price"),   desc: t("svcs.dt.desc"),
+      features: [t("svcs.dt.f0"), t("svcs.dt.f1"), t("svcs.dt.f2"), t("svcs.dt.f3"), t("svcs.dt.f4")] },
+    { icon: BarChart3,  color: "bg-purple-50 text-purple-600", tag: "bg-purple-50 text-purple-700 border-purple-200",
+      title: t("svc.da.title"),   price: t("svcs.da.price"),   desc: t("svcs.da.desc"),
+      features: [t("svcs.da.f0"), t("svcs.da.f1"), t("svcs.da.f2"), t("svcs.da.f3"), t("svcs.da.f4")] },
+    { icon: Shield,     color: "bg-red-50 text-red-600",      tag: "bg-red-50 text-red-700 border-red-200",
+      title: t("svc.tsg.title"),  price: t("svcs.tsg.price"),  desc: t("svcs.tsg.desc"),
+      features: [t("svcs.tsg.f0"), t("svcs.tsg.f1"), t("svcs.tsg.f2"), t("svcs.tsg.f3"), t("svcs.tsg.f4")] },
+  ];
+
+  const steps = [
+    { n: "01", title: t("svcs.process.0.title"), desc: t("svcs.process.0.desc") },
+    { n: "02", title: t("svcs.process.1.title"), desc: t("svcs.process.1.desc") },
+    { n: "03", title: t("svcs.process.2.title"), desc: t("svcs.process.2.desc") },
+    { n: "04", title: t("svcs.process.3.title"), desc: t("svcs.process.3.desc") },
+  ];
+
   return (
     <>
       {/* ─── Hero ── */}
@@ -54,13 +51,13 @@ export default function ServicesPage() {
           <ScrollReveal>
             <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 mb-6">
               <Zap size={13} className="text-blue-300" />
-              <span className="text-blue-200 text-sm font-medium">Services</span>
+              <span className="text-blue-200 text-sm font-medium">{t("svcs.hero.badge")}</span>
             </div>
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 max-w-3xl leading-tight">
-              Enterprise Expertise. <span className="grad-blue">Delivered Personally.</span>
+              {t("svcs.hero.h1a")} <span className="grad-blue">{t("svcs.hero.h1b")}</span>
             </h1>
             <p className="text-slate-300 text-xl max-w-2xl leading-relaxed">
-              Six specialised practices built on $25M+ of real program delivery. You work directly with me — not a junior team.
+              {t("svcs.hero.sub")}
             </p>
           </ScrollReveal>
         </div>
@@ -90,7 +87,7 @@ export default function ServicesPage() {
                   ))}
                 </ul>
                 <Link href="/contact" className="text-blue-600 font-semibold text-sm flex items-center gap-1.5 hover:gap-3 transition-all duration-200 cursor-pointer">
-                  Get a Quote <ArrowRight size={14} />
+                  {t("svcs.getQuote")} <ArrowRight size={14} />
                 </Link>
               </div>
             ))}
@@ -104,9 +101,9 @@ export default function ServicesPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <ScrollReveal>
             <div className="text-center mb-16">
-              <div className="badge-blue rounded-full px-4 py-1.5 text-sm inline-block mb-5">How I Work</div>
-              <h2 className="text-4xl font-bold text-slate-900 mb-3">Simple. Transparent. Results-Driven.</h2>
-              <p className="text-slate-500 text-lg max-w-xl mx-auto">Four clear phases with weekly communication and zero hidden surprises.</p>
+              <div className="badge-blue rounded-full px-4 py-1.5 text-sm inline-block mb-5">{t("svcs.process.badge")}</div>
+              <h2 className="text-4xl font-bold text-slate-900 mb-3">{t("svcs.process.h2")}</h2>
+              <p className="text-slate-500 text-lg max-w-xl mx-auto">{t("svcs.process.sub")}</p>
             </div>
           </ScrollReveal>
           <StaggerChildren className="grid md:grid-cols-4 gap-6" staggerMs={100}>
@@ -132,10 +129,10 @@ export default function ServicesPage() {
         <div className="absolute inset-0 bg-[#0F172A]/70 pointer-events-none" />
         <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
           <ScrollReveal>
-            <h2 className="text-4xl font-bold text-white mb-4">Not Sure Which Service Fits?</h2>
-            <p className="text-slate-300 mb-8 text-lg">Book a free 30-minute call. I'll assess your situation and recommend the right starting point.</p>
+            <h2 className="text-4xl font-bold text-white mb-4">{t("svcs.cta.h2")}</h2>
+            <p className="text-slate-300 mb-8 text-lg">{t("svcs.cta.sub")}</p>
             <Link href="/contact" className="btn-primary px-8 py-4 text-base inline-flex items-center gap-2 cursor-pointer">
-              Book Free Discovery Call <ArrowRight size={18} />
+              {t("svcs.cta.btn")} <ArrowRight size={18} />
             </Link>
           </ScrollReveal>
         </div>

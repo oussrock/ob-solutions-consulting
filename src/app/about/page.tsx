@@ -7,79 +7,57 @@ import Link from "next/link";
 import MeteorField from "@/components/MeteorField";
 import AuroraBackground   from "@/components/AuroraBackground";
 import DotMeshBackground  from "@/components/DotMeshBackground";
+import { useLanguage } from "@/context/LanguageContext";
 
-const competencies = [
-  { icon: Brain,      title: "AI & ML Integration",       desc: "GenAI, RAG, NLU, LLMs, model training and evaluation at enterprise scale.",             color: "bg-blue-50",   icon_c: "text-blue-600"   },
-  { icon: Cpu,        title: "Cloud Architecture",         desc: "Azure, AWS cloud-native, microservices, Kubernetes, distributed systems.",               color: "bg-sky-50",    icon_c: "text-sky-600"    },
-  { icon: TrendingUp, title: "Program Management",         desc: "$25M+ portfolio leadership with SAFe 6, Agile and Waterfall methodologies.",              color: "bg-green-50",  icon_c: "text-green-600"  },
-  { icon: BarChart3,  title: "Data Strategy & Analytics",  desc: "ETL, data governance, Databricks, Power BI, Tableau and advanced analytics platforms.", color: "bg-purple-50", icon_c: "text-purple-600" },
-  { icon: Shield,     title: "Trust, Safety & Governance", desc: "Cybersecurity, ITIL V4, IoT data analytics, vehicle telematics, mission-critical ops.", color: "bg-red-50",    icon_c: "text-red-600"    },
-  { icon: Users,      title: "Cross-Functional Leadership","desc": "Aligning Engineering, Data Science, Ops and executive stakeholders on a shared roadmap.", color: "bg-amber-50",  icon_c: "text-amber-600"  },
+const competencyIcons = [Brain, Cpu, TrendingUp, BarChart3, Shield, Users];
+const competencyColors = [
+  { color: "bg-blue-50",   icon_c: "text-blue-600"   },
+  { color: "bg-sky-50",    icon_c: "text-sky-600"    },
+  { color: "bg-green-50",  icon_c: "text-green-600"  },
+  { color: "bg-purple-50", icon_c: "text-purple-600" },
+  { color: "bg-red-50",    icon_c: "text-red-600"    },
+  { color: "bg-amber-50",  icon_c: "text-amber-600"  },
 ];
 
-const experience = [
-  {
-    title: "AI & Data Product Manager",
-    org: "Air Canada",
-    period: "Jan 2021 – Present",
-    highlights: [
-      "Direct a multi-program AI roadmap valued at $25M+: Cargo AI, AI Fuel Optimisation, AI Revenue Management.",
-      "Lead predictive model deployments aligning data architecture with global revenue and dynamic pricing strategy.",
-      "Collaborate with Engineering & Data Science on Azure-based systems automating revenue forecasting.",
-      "Transformed legacy processes into Agile/Scrum cycles, driving AI tool adoption across business units.",
-    ],
-  },
-  {
-    title: "IT Project Manager",
-    org: "Air Canada",
-    period: "Jun 2019 – Jan 2021",
-    highlights: [
-      "Led Air Canada's business website delivery and MuleSoft EIP integration for global Direct Connect partners.",
-      "Managed IT programs with budgets exceeding $6M, leveraging Azure for governance and cost management.",
-      "Orchestrated API connectivity with major aggregators, ensuring high-performance latency and bookability.",
-      "Secured executive sponsorship and managed complex multi-stakeholder program lifecycles.",
-    ],
-  },
-  {
-    title: "Aircraft Software & Data Distribution Manager",
-    org: "Air Canada",
-    period: "Feb 2019 – Jun 2019",
-    highlights: [
-      "Spearheaded cybersecurity and software safety initiatives for Air Canada's entire fleet.",
-      "Pioneered wireless software transfer upgrade using Teledyne solution, reducing fleet downtime.",
-      "Served as SME for aircraft software — critical off-hours support and complex issue resolution.",
-    ],
-  },
-  {
-    title: "Avionics Systems Engineer",
-    org: "Air Canada",
-    period: "Jul 2017 – Feb 2019",
-    highlights: [
-      "Designed ACMS and Satcom ORT software; managed ACARS links for seamless data exchange.",
-      "Led root cause analysis of in-service failures and secured financial approvals for Mandatory Airworthiness Requirements.",
-    ],
-  },
-];
+const experienceOrgs = ["Air Canada", "Air Canada", "Air Canada", "Air Canada"];
+const experiencePeriods = ["Jan 2021 – Present", "Jun 2019 – Jan 2021", "Feb 2019 – Jun 2019", "Jul 2017 – Feb 2019"];
+const certYears = ["Dec 2024", "Apr 2020", "Aug 2023", "Sep 2023", "Jul 2020", "Jan 2017", "Dec 2020", "2025"];
 
-const certifications = [
-  { label: "SAFe 6 Certified PO/PM",                    year: "Dec 2024" },
-  { label: "ITIL Foundation V4",                         year: "Apr 2020" },
-  { label: "Data Analyst — DataCamp",                    year: "Aug 2023" },
-  { label: "Data Engineer — DataCamp",                   year: "Sep 2023" },
-  { label: "Aircraft Certification Specialty (TC)",      year: "Jul 2020" },
-  { label: "Ordre des ingénieurs du Québec (OIQ)",       year: "Jan 2017" },
-  { label: "Electrical Engineering Master's — Sherbrooke", year: "Dec 2020" },
-  { label: "PMP — In Progress",                          year: "2025" },
-];
-
-const kpis = [
-  { value: 25, suffix: "M+", label: "AI Portfolio", prefix: "$" },
-  { value: 10, suffix: "+",  label: "Years Exp.",    prefix: "" },
-  { value: 6,  suffix: "M+", label: "IT Delivered",  prefix: "$" },
-  { value: 8,  suffix: "+",  label: "Certifications", prefix: "" },
+const kpiValues = [
+  { value: 25, suffix: "M+", prefix: "$" },
+  { value: 10, suffix: "+",  prefix: "" },
+  { value: 6,  suffix: "M+", prefix: "$" },
+  { value: 8,  suffix: "+",  prefix: "" },
 ];
 
 export default function AboutPage() {
+  const { t } = useLanguage();
+
+  const kpis = kpiValues.map((k, i) => ({ ...k, label: t(`about.kpi.${i}.label`) }));
+
+  const competencies = competencyIcons.map((icon, i) => ({
+    icon,
+    ...competencyColors[i],
+    title: t(`about.comp.${i}.title`),
+    desc:  t(`about.comp.${i}.desc`),
+  }));
+
+  const experience = [0, 1, 2, 3].map((i) => ({
+    title: t(`about.exp.${i}.title`),
+    org: experienceOrgs[i],
+    period: experiencePeriods[i],
+    highlights: [
+      t(`about.exp.${i}.h0`),
+      t(`about.exp.${i}.h1`),
+      ...(i < 2 ? [t(`about.exp.${i}.h2`), t(`about.exp.${i}.h3`)] : []),
+    ],
+  }));
+
+  const certifications = [0, 1, 2, 3, 4, 5, 6, 7].map((i) => ({
+    label: t(`about.certs.${i}`),
+    year: certYears[i],
+  }));
+
   return (
     <>
       {/* ─── Hero ── */}
@@ -92,13 +70,13 @@ export default function AboutPage() {
           <ScrollReveal>
             <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 mb-6">
               <Zap size={13} className="text-blue-300" />
-              <span className="text-blue-200 text-sm font-medium">About Oussama Bousselsal, Ing.</span>
+              <span className="text-blue-200 text-sm font-medium">{t("about.hero.badge")}</span>
             </div>
             <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 max-w-3xl leading-tight">
-              10 Years of Enterprise Tech.<br /><span className="grad-blue">Now Working for You.</span>
+              {t("about.hero.h1a")}<br /><span className="grad-blue">{t("about.hero.h1b")}</span>
             </h1>
             <p className="text-slate-300 text-xl max-w-2xl leading-relaxed mb-10">
-              Strategic Technology & Operations leader. Electrical Engineer (OIQ). SAFe 6 & ITIL V4 certified. Bilingual EN/FR. Proven at Fortune 500 scale — now bringing that firepower to ambitious organisations.
+              {t("about.hero.sub")}
             </p>
             <StaggerChildren className="flex flex-wrap gap-4" staggerMs={80} baseDelay={200}>
               {kpis.map((k) => (
@@ -128,13 +106,13 @@ export default function AboutPage() {
                 <div>
                   <h2 className="text-2xl font-bold text-slate-900 mb-1">Oussama Bousselsal, Ing.</h2>
                   <div className="flex flex-wrap gap-2 mb-4">
-                    <span className="badge-blue rounded-full px-3 py-1 text-xs">AI & Data Product Manager @ Air Canada</span>
+                    <span className="badge-blue rounded-full px-3 py-1 text-xs">{t("about.bio.badge.role")}</span>
                     <span className="badge-green rounded-full px-3 py-1 text-xs">SAFe 6 Certified</span>
                     <span className="badge-amber rounded-full px-3 py-1 text-xs">ITIL V4</span>
                     <span className="badge-slate rounded-full px-3 py-1 text-xs">OIQ Engineer</span>
                   </div>
                   <p className="text-slate-600 leading-relaxed text-sm">
-                    Strategic Technology & Operations Leader with over 10 years of experience building and scaling high-performance solutions in complex, mission-critical environments. Expert in global process ideation and system architecture, with a proven track record of leading business requirements between Operations and cross-functional teams — Engineering, Data Science, and Analytics — to drive business enablement. Fluent in English & French.
+                    {t("about.bio.bio")}
                   </p>
                 </div>
               </div>
@@ -149,8 +127,8 @@ export default function AboutPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <ScrollReveal>
             <div className="text-center mb-16">
-              <div className="badge-blue rounded-full px-4 py-1.5 text-sm inline-block mb-5">Core Competencies</div>
-              <h2 className="text-4xl font-bold text-slate-900 mb-3">What I Bring to the Table</h2>
+              <div className="badge-blue rounded-full px-4 py-1.5 text-sm inline-block mb-5">{t("about.comp.badge")}</div>
+              <h2 className="text-4xl font-bold text-slate-900 mb-3">{t("about.comp.h2")}</h2>
             </div>
           </ScrollReveal>
           <StaggerChildren className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" staggerMs={90}>
@@ -173,8 +151,8 @@ export default function AboutPage() {
         <div className="relative z-10 max-w-4xl mx-auto px-6">
           <ScrollReveal>
             <div className="text-center mb-16">
-              <div className="badge-blue rounded-full px-4 py-1.5 text-sm inline-block mb-5">Career Journey</div>
-              <h2 className="text-4xl font-bold text-slate-900">Professional Experience</h2>
+              <div className="badge-blue rounded-full px-4 py-1.5 text-sm inline-block mb-5">{t("about.exp.badge")}</div>
+              <h2 className="text-4xl font-bold text-slate-900">{t("about.exp.h2")}</h2>
             </div>
           </ScrollReveal>
 
@@ -217,8 +195,8 @@ export default function AboutPage() {
         <div className="relative z-10 max-w-4xl mx-auto px-6">
           <ScrollReveal>
             <div className="text-center mb-12">
-              <div className="badge-blue rounded-full px-4 py-1.5 text-sm inline-block mb-5">Credentials</div>
-              <h2 className="text-4xl font-bold text-slate-900">Certifications & Education</h2>
+              <div className="badge-blue rounded-full px-4 py-1.5 text-sm inline-block mb-5">{t("about.certs.badge")}</div>
+              <h2 className="text-4xl font-bold text-slate-900">{t("about.certs.h2")}</h2>
             </div>
           </ScrollReveal>
           <StaggerChildren className="grid md:grid-cols-2 gap-4" staggerMs={70}>
@@ -243,10 +221,10 @@ export default function AboutPage() {
         <div className="absolute inset-0 bg-[#0F172A]/70 pointer-events-none" />
         <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
           <ScrollReveal>
-            <h2 className="text-4xl font-bold text-white mb-4">Let's Work Together</h2>
-            <p className="text-slate-300 mb-8 text-lg">Bring Fortune 500-grade expertise to your next technology initiative.</p>
+            <h2 className="text-4xl font-bold text-white mb-4">{t("about.cta.h2")}</h2>
+            <p className="text-slate-300 mb-8 text-lg">{t("about.cta.sub")}</p>
             <Link href="/contact" className="btn-primary px-8 py-4 text-base inline-flex items-center gap-2 cursor-pointer">
-              Book a Free Strategy Call <ArrowRight size={18} />
+              {t("about.cta.btn")} <ArrowRight size={18} />
             </Link>
           </ScrollReveal>
         </div>
