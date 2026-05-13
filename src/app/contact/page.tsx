@@ -15,11 +15,27 @@ const info = [
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [form, setForm] = useState({ name:"", email:"", company:"", service:"", message:"" });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("Send failed");
+      setSubmitted(true);
+    } catch {
+      setError("Something went wrong. Please email me directly at ouss.bousselsal@gmail.com");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -158,9 +174,10 @@ export default function ContactPage() {
                         placeholder="What's your biggest technology challenge right now? What does success look like?" />
                     </div>
 
-                    <button type="submit" className="btn-primary w-full py-3.5 text-sm flex items-center justify-center gap-2 cursor-pointer">
-                      <Send size={16} /> Send Message
+                    <button type="submit" disabled={loading} className="btn-primary w-full py-3.5 text-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed">
+                      <Send size={16} /> {loading ? "Sending…" : "Send Message"}
                     </button>
+                    {error && <p className="text-sm text-red-500 text-center">{error}</p>}
                     <p className="text-xs text-center text-slate-400">Your information is kept private and never shared.</p>
                   </form>
                 )}
