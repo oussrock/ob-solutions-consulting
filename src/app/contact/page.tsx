@@ -92,7 +92,7 @@ export default function ContactPage() {
                   ))}
                 </StaggerChildren>
 
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+                <a href="https://www.linkedin.com/in/oussb/" target="_blank" rel="noopener noreferrer"
                   className="mt-5 card p-4 flex items-center gap-4 group cursor-pointer bg-white/85 backdrop-blur-sm hover:border-blue-300 transition-colors">
                   <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
                   <ExternalLink size={17} />
